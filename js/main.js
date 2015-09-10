@@ -36,35 +36,6 @@
         selectFirst,
         selectSecond;
 
-    function selectContent(templates){
-        content.innerHTML = tmpl(templates[0], {
-            items: keys,
-            selected: 'born'
-        });
-        selectFirst = document.querySelector('.select1');
-
-        selectFirst.addEventListener('change', function(){
-            render(templates);
-        });
-        render(templates);
-    }
-
-    function selectContentTwo(templates){
-        contentSecond.innerHTML = tmpl(templates[2], {
-            items: keys,
-            selected: 'name'
-        });
-        selectSecond = document.querySelector('.select2');
-
-        selectSecond.addEventListener('change', function(){
-            render(templates);
-        });
-        render(templates);
-    }
-
-    function checkSelect() {
-        return selectSecond.options[selectSecond.selectedIndex].innerText;
-    }
 
     function key(keys, key){
         return keys.reduce(function(prev, stock){
@@ -75,12 +46,56 @@
         }, []);
     }
 
+    function showList(array, key, value){
+        var listGroup = [];
+             array.forEach(function(element){
+                if(element.hasOwnProperty(key) && (element[key] == value)){
+                    listGroup.push(JSON.stringify(element));
+                }
+             });
+        return listGroup;
+
+    }
+
+    function checkSelectFirst() {
+        return selectFirst.options[selectFirst.selectedIndex].innerText;
+    }
+    function checkSelectSecond() {
+        return selectSecond.options[selectSecond.selectedIndex].innerText;
+    }
+
+    function selectContent(templates){
+        content.innerHTML = tmpl(templates[0], {
+            items: keys,
+            selected: 'sex'
+        });
+        selectFirst = document.querySelector('.select1');
+
+        selectFirst.addEventListener('change', function(){
+            selectContentTwo(templates);
+        });
+
+        selectContentTwo(templates);
+    }
+
+    function selectContentTwo(templates){
+        contentSecond.innerHTML = tmpl(templates[2], {
+            items: key(information, checkSelectFirst())
+        });
+        selectSecond = document.querySelector('.select2');
+
+        selectSecond.addEventListener('change', function(){
+            render(templates);
+        });
+        render(templates);
+    }
+
     function render(templates){
-        console.log(information);
         info.innerHTML = tmpl(templates[1], {
-            items: key(information, checkSelect())
+            items: showList(information, checkSelectFirst(), checkSelectSecond())
         });
     }
+
 
 
     var urlArray = [
@@ -101,8 +116,7 @@
             req.send(null);
         });
     })).then(function(templates){
-//        selectContent(templates);
-        selectContentTwo(templates);
+        selectContent(templates);
     });
 
 

@@ -1,10 +1,5 @@
 <select class="select2">
-    <% for( var i = 0; i < items.length; i++) { %>
-    <% if(items[i] === selected){ %>
-    <option selected><%=items[i]%></option>
-    <% }else{ %>
+    <% for(var i = 0; i < items.length; i++) { %>
     <option><%=items[i]%></option>
-    <% } %>
-    <!--<option <%= items[i] === selected ? 'selected' : '' %> ><%=items[i]%></option>-->
     <% } %>
 </select>
