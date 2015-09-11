@@ -37,6 +37,14 @@
         selectSecond;
 
 
+    function checkSelectFirst() {
+        return selectFirst.options[selectFirst.selectedIndex].innerText;
+    }
+    function checkSelectSecond() {
+        return selectSecond.options[selectSecond.selectedIndex].innerText;
+    }
+
+
     function key(keys, key){
         return keys.reduce(function(prev, stock){
             if(prev.indexOf(stock[key]) === -1){
@@ -47,21 +55,9 @@
     }
 
     function showList(array, key, value){
-        var listGroup = [];
-             array.forEach(function(element){
-                if(element.hasOwnProperty(key) && (element[key] == value)){
-                    listGroup.push(JSON.stringify(element));
-                }
+       return array.filter(function(element){
+                return element.hasOwnProperty(key) && (element[key] == value);
              });
-        return listGroup;
-
-    }
-
-    function checkSelectFirst() {
-        return selectFirst.options[selectFirst.selectedIndex].innerText;
-    }
-    function checkSelectSecond() {
-        return selectSecond.options[selectSecond.selectedIndex].innerText;
     }
 
     function selectContent(templates){
